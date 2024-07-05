@@ -16,9 +16,7 @@ public class BusOperator {
     private String phoneNumber;
 
     
-//    @OneToMany(mappedBy = "busOperator")
-//    private List<BusRoute> busRoutes;
-//    
+   
     // Default constructor
     public BusOperator() {
     }
