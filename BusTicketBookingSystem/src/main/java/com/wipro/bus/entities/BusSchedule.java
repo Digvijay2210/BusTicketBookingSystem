@@ -1,49 +1,39 @@
-package com.wipro.bus.dto;
+package com.wipro.bus.entities;
 
+import jakarta.persistence.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.Positive;
-
-public class BusRouteDTO {
-
-    private Long routeId;
-
-    @NotBlank(message = "Bus name is mandatory")
-    private String busName;
-
-    @NotBlank(message = "Bus number is mandatory")
-    @Size(max = 10, message = "Bus number can have at most 10 characters")
-    private String busNumber;
-
-    @NotBlank(message = "Bus type is mandatory")
-    private String busType;
-
-    @Min(value = 1, message = "Number of seats must be at least 1")
-    private int numOfSeats;
-
-    @NotBlank(message = "Origin is mandatory")
-    private String origin;
-
-    @NotBlank(message = "Destination is mandatory")
-    private String destination;
-
-    @NotBlank(message = "Timings are mandatory")
-    private String timings;
-
-    @Positive(message = "Fare must be positive")
-    private double fare;
-
-    private String amenities;
-
+@Entity
+public class BusSchedule {
     
-    public BusRouteDTO() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long scheduleId;
+    public Long getScheduleId() {
+		return scheduleId;
+	}
+
+	public void setScheduleId(Long scheduleId) {
+		this.scheduleId = scheduleId;
+	}
+
+	private String busName;
+    private String busNumber;
+    private String busType;
+    private int numOfSeats;
+    private String origin;
+    private String destination;
+    private String timings;
+    private double fare;
+    
+
+    // Default constructor
+    public BusSchedule() {
     }
 
-    
-    public BusRouteDTO(String busName, String busNumber, String busType, int numOfSeats, String origin, String destination, String timings, double fare, String amenities) {
-        this.busName = busName;
+    // Parameterized constructor
+    public BusSchedule(long scheduleId,String busName, String busNumber, String busType, int numOfSeats, String origin, String destination, String timings, double fare) {
+        this.scheduleId=scheduleId;
+    	this.busName = busName;
         this.busNumber = busNumber;
         this.busType = busType;
         this.numOfSeats = numOfSeats;
@@ -51,17 +41,16 @@ public class BusRouteDTO {
         this.destination = destination;
         this.timings = timings;
         this.fare = fare;
-        this.amenities = amenities;
     }
 
     
-    public Long getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(Long routeId) {
-        this.routeId = routeId;
-    }
+//    public Long getRouteId() {
+//        return routeId;
+//    }
+//
+//    public void setRouteId(Long routeId) {
+//        this.routeId = routeId;
+//    }
 
     public String getBusName() {
         return busName;
@@ -127,11 +116,5 @@ public class BusRouteDTO {
         this.fare = fare;
     }
 
-    public String getAmenities() {
-        return amenities;
-    }
-
-    public void setAmenities(String amenities) {
-        this.amenities = amenities;
-    }
+    
 }

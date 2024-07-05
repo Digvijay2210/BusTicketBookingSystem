@@ -1,3 +1,4 @@
+
 package com.wipro.bus.service;
 
 import com.wipro.bus.dto.BookingDTO;
@@ -8,8 +9,10 @@ import com.wipro.bus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -23,9 +26,28 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking createBooking(BookingDTO bookingDTO) {
         Optional<User> userOptional = userRepository.findById(bookingDTO.getUserId());
+
         if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            
+            // Check if any of the requested seat numbers are already booked for the route
+            List<String> requestedSeats = Arrays.asList(bookingDTO.getSeatNumbers().split(","));
+            
+            List<Booking> conflictingBookings = bookingRepository.findBookingsByRouteIdAndSeatNumbers(bookingDTO.getRouteId(), bookingDTO.getSeatNumbers());
+            
+            List<String> bookedSeats = conflictingBookings.stream()
+                    .flatMap(b -> Arrays.stream(b.getSeatNumbers().split(",")))
+                    .collect(Collectors.toList());
+            
+            for (String seat : requestedSeats) {
+                if (bookedSeats.contains(seat.trim())) {
+                    throw new RuntimeException("Seat number " + seat + " is already booked for route " + bookingDTO.getRouteId());
+                }
+            }
+
+            // Create new booking if no conflicts found
             Booking booking = new Booking(
-                userOptional.get(),
+                user,
                 bookingDTO.getRouteId(),
                 bookingDTO.getSeatNumbers(),
                 bookingDTO.getBookingDate(),
@@ -84,14 +106,31 @@ public class BookingServiceImpl implements BookingService {
         Optional<User> userOptional = userRepository.findById(bookingDTO.getUserId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+
+            // Validate if the seat numbers are already booked for the given route
+            List<String> requestedSeats = Arrays.asList(bookingDTO.getSeatNumbers().split(","));
+            List<Booking> conflictingBookings = bookingRepository.findBookingsByRouteIdAndSeatNumbers(bookingDTO.getRouteId(), bookingDTO.getSeatNumbers());
+
+            List<String> bookedSeats = conflictingBookings.stream()
+                    .flatMap(b -> Arrays.stream(b.getSeatNumbers().split(",")))
+                    .collect(Collectors.toList());
+
+            for (String seat : requestedSeats) {
+                if (bookedSeats.contains(seat.trim())) {
+                    throw new RuntimeException("Seat number " + seat + " is already booked for route " + bookingDTO.getRouteId());
+                }
+            }
+
+            // Create new booking if no conflicts are found
             Booking booking = new Booking(
                 user,
                 bookingDTO.getRouteId(),
                 bookingDTO.getSeatNumbers(),
                 bookingDTO.getBookingDate(),
                 bookingDTO.getTotalFare(),
-                "BOOKED" 
+                "BOOKED"  // Assuming "BOOKED" is the desired status
             );
+
             return bookingRepository.save(booking);
         } else {
             throw new RuntimeException("User not found");

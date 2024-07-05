@@ -1,3 +1,4 @@
+
 package com.wipro.bus.controller;
 
 import com.wipro.bus.dto.BookingDTO;
@@ -16,7 +17,7 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Booking> createBooking(@RequestBody BookingDTO bookingDTO) {
         Booking booking = bookingService.createBooking(bookingDTO);
         return ResponseEntity.ok(booking);
@@ -54,14 +55,10 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-    // New endpoint for booking tickets
-    @PostMapping("/book")
-    public ResponseEntity<Booking> bookTicket(@RequestBody BookingDTO bookingDTO) {
-        try {
-            Booking booking = bookingService.bookTicket(bookingDTO);
-            return ResponseEntity.ok(booking);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
+    // New method for booking a ticket
+//    @PostMapping("/book")
+//    public ResponseEntity<Booking> bookTicket(@RequestBody BookingDTO bookingDTO) {
+//        Booking booked = bookingService.bookTicket(bookingDTO);
+//        return ResponseEntity.ok(booked);
+//    }
 }

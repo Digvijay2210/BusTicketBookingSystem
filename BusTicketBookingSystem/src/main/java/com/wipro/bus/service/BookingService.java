@@ -1,8 +1,8 @@
+
 package com.wipro.bus.service;
 
 import com.wipro.bus.dto.BookingDTO;
 import com.wipro.bus.entities.Booking;
-
 import java.util.List;
 
 public interface BookingService {
@@ -19,6 +19,6 @@ public interface BookingService {
 
     List<Booking> getBookingsByUserId(Long userId);
 
-    // New method for booking tickets
+    // Add this method
     Booking bookTicket(BookingDTO bookingDTO);
 }
