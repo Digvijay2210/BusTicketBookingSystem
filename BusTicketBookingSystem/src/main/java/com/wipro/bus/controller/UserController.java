@@ -1,5 +1,7 @@
 package com.wipro.bus.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,7 @@ public class UserController {
             User registeredUser = userService.registerUser(user);
             return ResponseEntity.ok(registeredUser);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
@@ -32,7 +34,7 @@ public class UserController {
             User user = userService.loginUser(email, password);
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
@@ -42,7 +44,7 @@ public class UserController {
             User updatedUser = userService.updateProfile(user);
             return ResponseEntity.ok(updatedUser);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
@@ -52,7 +54,7 @@ public class UserController {
             List<Booking> bookingHistory = userService.viewBookingHistory(userId);
             return ResponseEntity.ok(bookingHistory);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
@@ -66,9 +68,7 @@ public class UserController {
                 return ResponseEntity.notFound().build();
             }
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }
-
-

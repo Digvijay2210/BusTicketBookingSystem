@@ -8,7 +8,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
-    // Remove the userId field, as we will reference User directly
+    
     private Long routeId;
     private String seatNumbers;
     private String bookingDate;
@@ -42,7 +42,6 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    // Remove the userId field's getter and setter
     public Long getRouteId() {
         return routeId;
     }

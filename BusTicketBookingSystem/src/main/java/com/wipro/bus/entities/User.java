@@ -16,8 +16,6 @@ public class User {
     private String phoneNumber;
     private String address;
 
-  
-    
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
     
@@ -33,7 +31,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
-    
 
     // Getters and setters
     public Long getUserId() {
@@ -82,5 +79,13 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

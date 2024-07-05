@@ -2,6 +2,7 @@ package com.wipro.bus.service;
 
 import com.wipro.bus.entities.User;
 import com.wipro.bus.entities.Booking;
+
 import java.util.List;
 
 public interface UserService {
