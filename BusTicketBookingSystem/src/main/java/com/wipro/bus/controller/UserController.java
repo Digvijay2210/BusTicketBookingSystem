@@ -29,12 +29,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<User> loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
         try {
             User user = userService.loginUser(email, password);
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.badRequest().body(null);
         }
     }
 

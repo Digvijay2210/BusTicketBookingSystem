@@ -53,4 +53,15 @@ public class BookingController {
         List<Booking> bookings = bookingService.getBookingsByUserId(userId);
         return ResponseEntity.ok(bookings);
     }
+
+    // New endpoint for booking tickets
+    @PostMapping("/book")
+    public ResponseEntity<Booking> bookTicket(@RequestBody BookingDTO bookingDTO) {
+        try {
+            Booking booking = bookingService.bookTicket(bookingDTO);
+            return ResponseEntity.ok(booking);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 }

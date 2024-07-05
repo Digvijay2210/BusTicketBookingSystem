@@ -5,7 +5,6 @@ import com.wipro.bus.entities.Booking;
 import com.wipro.bus.entities.User;
 import com.wipro.bus.repository.BookingRepository;
 import com.wipro.bus.repository.UserRepository;
-import com.wipro.bus.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,5 +77,24 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Booking> getBookingsByUserId(Long userId) {
         return bookingRepository.findByUser_UserId(userId);
+    }
+
+    @Override
+    public Booking bookTicket(BookingDTO bookingDTO) {
+        Optional<User> userOptional = userRepository.findById(bookingDTO.getUserId());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Booking booking = new Booking(
+                user,
+                bookingDTO.getRouteId(),
+                bookingDTO.getSeatNumbers(),
+                bookingDTO.getBookingDate(),
+                bookingDTO.getTotalFare(),
+                "BOOKED" 
+            );
+            return bookingRepository.save(booking);
+        } else {
+            throw new RuntimeException("User not found");
+        }
     }
 }

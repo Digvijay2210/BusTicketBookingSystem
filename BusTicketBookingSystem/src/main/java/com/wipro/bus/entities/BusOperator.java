@@ -13,11 +13,11 @@ public class BusOperator {
     private String password;
     private String phoneNumber;
 
-    // Default constructor
+    
     public BusOperator() {
     }
 
-    // Parameterized constructor
+    
     public BusOperator(String name, String email, String password, String phoneNumber) {
         this.name = name;
         this.email = email;
@@ -25,7 +25,7 @@ public class BusOperator {
         this.phoneNumber = phoneNumber;
     }
 
-    // Getters and setters
+   
     public Long getOperatorId() {
         return operatorId;
     }

@@ -20,15 +20,21 @@ public class UserServiceImpl implements UserService {
     private BookingRepository bookingRepository;
 
     @Override
-    public User registerUser(User user) {
-        // Implement registration logic, e.g., save user to database
+	public User registerUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            throw new RuntimeException("User already exists with this email");
+        }
         return userRepository.save(user);
-    }
+	}
 
     @Override
     public User loginUser(String email, String password) {
-        // Implement login logic, e.g., fetch user from database by email and password
-        return userRepository.findByEmailAndPassword(email, password);
+        // Find user by email
+        User user = userRepository.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        throw new RuntimeException("Invalid email or password");
     }
 
     @Override
