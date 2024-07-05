@@ -16,16 +16,16 @@ public class Booking {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") // This establishes the foreign key relationship
+    @JoinColumn(name = "user_id") 
     private User user;
 
-    // Default constructor
+   
     public Booking() {
     }
 
     // Parameterized constructor
     public Booking(User user, Long routeId, String seatNumbers, String bookingDate, double totalFare, String status) {
-        this.user = user; // Reference the User object
+        this.user = user; 
         this.routeId = routeId;
         this.seatNumbers = seatNumbers;
         this.bookingDate = bookingDate;
@@ -33,7 +33,7 @@ public class Booking {
         this.status = status;
     }
 
-    // Getters and setters
+   
     public Long getBookingId() {
         return bookingId;
     }

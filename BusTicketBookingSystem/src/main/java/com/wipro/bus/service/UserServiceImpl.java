@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Booking> viewBookingHistory(Long userId) {
         // Implement logic to fetch booking history for a user
-        return bookingRepository.findByUser_Id(userId);
+        return bookingRepository.findByUser_UserId(userId);
     }
 
     @Override

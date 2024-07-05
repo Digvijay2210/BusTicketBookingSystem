@@ -35,7 +35,7 @@ public class BusRoute {
         this.amenities = amenities;
     }
 
-    // Getters and setters
+    
     public Long getRouteId() {
         return routeId;
     }

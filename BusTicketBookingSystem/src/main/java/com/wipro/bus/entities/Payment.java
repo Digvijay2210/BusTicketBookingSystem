@@ -11,24 +11,24 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
-    // Remove the redundant bookingId field
-    // private Long bookingId; 
+  
+    
     
     private String paymentMethod;
     private double paymentAmount;
     private String paymentStatus;
     private Date paymentDate;
     
-    // Use the relationship directly
+    
     @OneToOne
-    @JoinColumn(name = "booking_id") // This maps to the booking_id column in the Payment table
+    @JoinColumn(name = "booking_id") 
     private Booking booking;
 
-    // Default constructor
+   
     public Payment() {
     }
 
-    // Parameterized constructor
+    
     public Payment(Booking booking, String paymentMethod, double paymentAmount, String paymentStatus, Date paymentDate) {
         this.booking = booking;
         this.paymentMethod = paymentMethod;
@@ -37,7 +37,7 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
 
-    // Getters and setters
+    
     public Long getPaymentId() {
         return paymentId;
     }
@@ -46,15 +46,7 @@ public class Payment {
         this.paymentId = paymentId;
     }
 
-    // Remove bookingId getters and setters
-    // public Long getBookingId() {
-    //     return bookingId;
-    // }
-
-    // public void setBookingId(Long bookingId) {
-    //     this.bookingId = bookingId;
-    // }
-
+   
     public String getPaymentMethod() {
         return paymentMethod;
     }

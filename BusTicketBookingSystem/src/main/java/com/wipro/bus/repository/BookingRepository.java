@@ -9,5 +9,4 @@ import com.wipro.bus.entities.Booking;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findByUser_UserId(Long userId);
 
-	List<Booking> findByUser_Id(Long userId);
 }

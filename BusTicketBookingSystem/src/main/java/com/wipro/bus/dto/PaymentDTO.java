@@ -28,11 +28,11 @@ public class PaymentDTO {
     @NotNull(message = "Payment date cannot be null")
     private Date paymentDate;
 
-    // Default constructor
+    
     public PaymentDTO() {
     }
 
-    // Parameterized constructor
+    
     public PaymentDTO(Long bookingId, String paymentMethod, double paymentAmount, String paymentStatus, Date paymentDate) {
         this.bookingId = bookingId;
         this.paymentMethod = paymentMethod;
@@ -41,7 +41,7 @@ public class PaymentDTO {
         this.paymentDate = paymentDate;
     }
 
-    // Getters and setters
+    
     public Long getPaymentId() {
         return paymentId;
     }

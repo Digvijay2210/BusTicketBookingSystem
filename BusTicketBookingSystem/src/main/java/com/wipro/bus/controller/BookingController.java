@@ -1,17 +1,13 @@
 package com.wipro.bus.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.wipro.bus.dto.BookingDTO;
 import com.wipro.bus.entities.Booking;
-import com.wipro.bus.entities.User;
 import com.wipro.bus.service.BookingService;
-import com.wipro.bus.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -20,17 +16,41 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @Autowired
-    private UserService userService;
+    @PostMapping
+    public ResponseEntity<Booking> createBooking(@RequestBody BookingDTO bookingDTO) {
+        Booking booking = bookingService.createBooking(bookingDTO);
+        return ResponseEntity.ok(booking);
+    }
+
+    @PutMapping("/{bookingId}")
+    public ResponseEntity<Booking> updateBooking(
+            @PathVariable Long bookingId,
+            @RequestBody BookingDTO bookingDTO) {
+        Booking updatedBooking = bookingService.updateBooking(bookingId, bookingDTO);
+        return ResponseEntity.ok(updatedBooking);
+    }
+
+    @DeleteMapping("/{bookingId}")
+    public ResponseEntity<Void> cancelBooking(@PathVariable Long bookingId) {
+        bookingService.cancelBooking(bookingId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<Booking> getBookingById(@PathVariable Long bookingId) {
+        Booking booking = bookingService.getBookingById(bookingId);
+        return ResponseEntity.ok(booking);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Booking>> getAllBookings() {
+        List<Booking> bookings = bookingService.getAllBookings();
+        return ResponseEntity.ok(bookings);
+    }
 
     @GetMapping("/user/{userId}")
-    public List<Booking> getBookingsByUserId(@PathVariable Long userId) {
-        User user = userService.findUserById(userId);
-        
-        if (user == null) {
-            throw new RuntimeException("User not found with ID: " + userId);
-        }
-        
-        return bookingService.getBookingsByUser(user);
+    public ResponseEntity<List<Booking>> getBookingsByUserId(@PathVariable Long userId) {
+        List<Booking> bookings = bookingService.getBookingsByUserId(userId);
+        return ResponseEntity.ok(bookings);
     }
 }

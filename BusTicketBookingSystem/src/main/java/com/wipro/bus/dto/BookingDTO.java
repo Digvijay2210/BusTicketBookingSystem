@@ -33,7 +33,7 @@ public class BookingDTO {
     public BookingDTO() {
     }
 
-    // Parameterized constructor
+    
     public BookingDTO(Long bookingId, Long userId, Long routeId, String seatNumbers, String bookingDate, double totalFare, String status) {
         this.bookingId = bookingId;
         this.userId = userId;
@@ -44,7 +44,7 @@ public class BookingDTO {
         this.status = status;
     }
 
-    // Getters and setters
+    
     public Long getBookingId() {
         return bookingId;
     }
