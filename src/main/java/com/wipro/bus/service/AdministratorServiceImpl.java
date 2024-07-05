@@ -1,9 +1,12 @@
 package com.wipro.bus.service;
 
 import com.wipro.bus.dto.AdministratorDTO;
+import com.wipro.bus.dto.BusOperatorDTO;
 import com.wipro.bus.entities.Administrator;
+import com.wipro.bus.entities.BusOperator;
 import com.wipro.bus.exception.AdministratorNotFoundException;
 import com.wipro.bus.repository.AdministratorRepository;
+import com.wipro.bus.repository.BusOperatorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,9 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Autowired
     private AdministratorRepository administratorRepository;
+
+    @Autowired
+    private BusOperatorRepository busOperatorRepository;
 
     @Override
     public AdministratorDTO createAdministrator(AdministratorDTO administratorDTO) {
@@ -59,6 +65,30 @@ public class AdministratorServiceImpl implements AdministratorService {
         List<Administrator> administrators = administratorRepository.findAll();
         return administrators.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+    
+    public BusOperatorDTO addBusOperator(BusOperatorDTO busOperatorDTO) {
+        BusOperator busOperator = new BusOperator(
+                busOperatorDTO.getName(),
+                busOperatorDTO.getEmail(),
+                busOperatorDTO.getPassword(),
+                busOperatorDTO.getPhoneNumber()
+        );
+        BusOperator savedBusOperator = busOperatorRepository.save(busOperator);
+        return new BusOperatorDTO(
+                savedBusOperator.getOperatorId(),
+                savedBusOperator.getName(),
+                savedBusOperator.getEmail(),
+                savedBusOperator.getPassword(),
+                savedBusOperator.getPhoneNumber()
+        );
+    }
+
+    public void deleteBusOperator(Long operatorId) {
+        if (!busOperatorRepository.existsById(operatorId)) {
+            throw new AdministratorNotFoundException("Bus operator not found with id " + operatorId);
+        }
+        busOperatorRepository.deleteById(operatorId);
+    }
 
     private Administrator convertToEntity(AdministratorDTO administratorDTO) {
         return new Administrator(administratorDTO.getName(), administratorDTO.getEmail(), administratorDTO.getPassword());
@@ -68,4 +98,3 @@ public class AdministratorServiceImpl implements AdministratorService {
         return new AdministratorDTO(administrator.getAdminId(), administrator.getName(), administrator.getEmail(), administrator.getPassword());
     }
 }
-

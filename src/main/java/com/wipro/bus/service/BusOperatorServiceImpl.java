@@ -37,13 +37,13 @@ public class BusOperatorServiceImpl implements BusOperatorService {
             BusOperator updatedBusOperator = busOperatorRepository.save(busOperator);
             return convertToDTO(updatedBusOperator);
         }
-        throw new BusOperatorNotFoundException("Bus Operator not found with id " + operatorId);
+        throw new BusOperatorNotFoundException("Bus operator not found with id " + operatorId);
     }
 
     @Override
     public void deleteBusOperator(Long operatorId) {
         if (!busOperatorRepository.existsById(operatorId)) {
-            throw new BusOperatorNotFoundException("Bus Operator not found with id " + operatorId);
+            throw new BusOperatorNotFoundException("Bus operator not found with id " + operatorId);
         }
         busOperatorRepository.deleteById(operatorId);
     }
@@ -52,7 +52,7 @@ public class BusOperatorServiceImpl implements BusOperatorService {
     public BusOperatorDTO getBusOperatorById(Long operatorId) {
         Optional<BusOperator> optionalBusOperator = busOperatorRepository.findById(operatorId);
         return optionalBusOperator.map(this::convertToDTO)
-                .orElseThrow(() -> new BusOperatorNotFoundException("Bus Operator not found with id " + operatorId));
+                .orElseThrow(() -> new BusOperatorNotFoundException("Bus operator not found with id " + operatorId));
     }
 
     @Override

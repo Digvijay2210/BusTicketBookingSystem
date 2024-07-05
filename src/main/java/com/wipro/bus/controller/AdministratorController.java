@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wipro.bus.dto.AdministratorDTO;
+import com.wipro.bus.dto.BusOperatorDTO;
 import com.wipro.bus.service.AdministratorService;
 
 @RestController
@@ -55,4 +56,19 @@ public class AdministratorController {
         List<AdministratorDTO> administrators = administratorService.getAllAdministrators();
         return ResponseEntity.ok(administrators);
     }
+    
+    
+    // New endpoints for managing Bus Operators by Administrators
+    @PostMapping("/addBusOperators")
+    public ResponseEntity<BusOperatorDTO> addBusOperator(@Validated @RequestBody BusOperatorDTO busOperatorDTO) {
+        BusOperatorDTO createdBusOperator = administratorService.addBusOperator(busOperatorDTO);
+        return ResponseEntity.ok(createdBusOperator);
+    }
+
+    @DeleteMapping("/deleteBusOperators/{operatorId}")
+    public ResponseEntity<Void> deleteBusOperator(@PathVariable Long operatorId) {
+        administratorService.deleteBusOperator(operatorId);
+        return ResponseEntity.noContent().build();
+    }
+    
 }
